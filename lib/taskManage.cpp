@@ -1,4 +1,5 @@
 #include "taskManage.h"
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -26,4 +27,14 @@ void printTaskList() {
   }
 }
 
-int countTasks() { return taskList.size(); }
+void remTask(const std::string &taskName) {
+  auto it = std::find_if(taskList.begin(), taskList.end(),
+                         [&taskName](const Task &t) { return t.name == taskName; });
+  if (it != taskList.end()) {
+    taskList.erase(it);
+  } else {
+    std::cout << "Couldn't delete it..." << std::endl;
+  }
+}
+
+int countTasks() { return static_cast<int>(taskList.size()); }
